@@ -3,6 +3,7 @@ import './App.css';
 import {SearchBar} from "../SearchBar/SearchBar";
 import {SearchResults} from "../SearchResults/SearchResults";
 import {Playlist} from "../Playlist/Playlist";
+import Spotify from "../../util/Spotify";
 
 const track = {id: 5, name:"Raining Outside", artist:"Santi", album:"Mandy and the Jungle"};
 const listOfTracks = [track, track, track];
@@ -11,9 +12,9 @@ class App extends React.Component{
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: listOfTracks.concat({id: 55, name:"Maria", artist:"Santi", album:"Mandy and the Jungle"}),
+      searchResults: [],
       playListName: null,
-      playListTracks: listOfTracks
+      playListTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
     this.removeTrack = this.removeTrack.bind(this);
@@ -53,7 +54,9 @@ class App extends React.Component{
   }
 
   search(term) {
-    console.log(term);
+    Spotify.Search(term).then(newSearchResults => {
+      this.setState({searchResults: newSearchResults})
+    })
   }
 
   render() {
