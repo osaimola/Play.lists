@@ -13,7 +13,7 @@ class App extends React.Component{
     super(props);
     this.state = {
       searchResults: [],
-      playListName: null,
+      playListName: "New Playlist",
       playListTracks: []
     };
     this.addTrack = this.addTrack.bind(this);
@@ -50,11 +50,14 @@ class App extends React.Component{
 
   savePlayList() {
     let trackURIs = this.state.playListTracks.map(track => track.uri);
-    console.log(trackURIs);
+    Spotify.savePlayList(this.state.playListName, trackURIs).then( responseJson => {
+      if (responseJson.hasOwnProperty("snapshot_id")){
+      this.setState({playListTracks: [], playListName: "New Playlist"});}
+    });
   }
 
   search(term) {
-    Spotify.Search(term).then(newSearchResults => {
+    Spotify.search(term).then(newSearchResults => {
       this.setState({searchResults: newSearchResults})
     })
   }
