@@ -5,9 +5,6 @@ import {SearchResults} from "../SearchResults/SearchResults";
 import {Playlist} from "../Playlist/Playlist";
 import Spotify from "../../util/Spotify";
 
-const track = {id: 5, name:"Raining Outside", artist:"Santi", album:"Mandy and the Jungle"};
-const listOfTracks = [track, track, track];
-
 class App extends React.Component{
   constructor(props) {
     super(props);
@@ -54,6 +51,7 @@ class App extends React.Component{
       if (responseJson.hasOwnProperty("snapshot_id")){
       this.setState({playListTracks: [], playListName: "New Playlist"});}
     });
+    console.log(trackURIs);
   }
 
   search(term) {
@@ -65,7 +63,7 @@ class App extends React.Component{
   render() {
     return(
       <div>
-        <h1>Ja<span className="highlight">mmm</span>ing</h1>
+        <h1>Ja<span className="highlight">mm</span>ing</h1>
         <div className="App">
           <SearchBar onSearch={this.search}/>
           <div className="App-playlist">
